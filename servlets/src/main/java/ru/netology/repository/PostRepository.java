@@ -4,12 +4,14 @@ import ru.netology.model.Post;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 // Stub
 public class PostRepository {
 
-  private final Map<Long, String> posts = new ConcurrentSkipListMap<>();
+  private final Map<Long, String> posts = new HashMap<>();
+  private final AtomicLong id = new AtomicLong();
 
   public List<Post> all() {
     List<Post> res = new ArrayList<>();
@@ -31,7 +33,12 @@ public class PostRepository {
   }
 
   public Post save(Post post) {
-    posts.put(post.getId(), post.getContent());
+
+    if (post.getId() == 0) {
+      posts.put(id.addAndGet(post.getId()) +1 ,post.getContent());
+    } else {
+      posts.put(post.getId(), post.getContent());
+    }
 
     return post;
   }
