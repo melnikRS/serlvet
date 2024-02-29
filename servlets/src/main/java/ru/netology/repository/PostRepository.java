@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 // Stub
 public class PostRepository {
 
-  private final Map<Long, String> posts = new HashMap<>();
+  private final Map<Long, String> posts = new ConcurrentSkipListMap<>();
   private final AtomicLong id = new AtomicLong();
 
   public List<Post> all() {
